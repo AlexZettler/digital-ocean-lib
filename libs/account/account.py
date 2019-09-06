@@ -5,7 +5,7 @@ import json
 import logging
 from var.reqmethod import DigitalOceanRequests
 
-#For account specific calls
+#For account specific calls.
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
