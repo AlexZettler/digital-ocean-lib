@@ -5,9 +5,7 @@ import json
 import logging
 import requests
 from var.telemetry import DigitalOceanRequests
-from var.vars import DO_REGIONS, DO_BASE_URL, DO_SIZES
-
-#Droplet creation and deletetion
+from var.vars import DO_REGIONS, DO_BASE_URL, DO_SIZES, DO_DROPLETS, DO_IAMGES
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
@@ -30,7 +28,20 @@ class Utilities():
     def list_all_do_sizes(self):
         try:
             r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_SIZES)
+            return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection failed.")
+    def list_all_do_droplets(self):
+        try:
+            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_DROPLETS)
+            return r
+        except requests.ConnectionError as e:
+            logging.info("ERROR: Connection failed.")
+    def list_all_do_images(slef):
+        try:
+            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_IAMGES)
+            return r
+        except requests.ConnectionError as e:
+            logging.info("ERROR: Connection error")
 regions = Utilities()
 print(regions.list_all_do_regions())

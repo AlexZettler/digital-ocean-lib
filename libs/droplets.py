@@ -40,6 +40,8 @@ class Droplets():
         for key, value in kwargs.items():
             droplet_json_payload[key] = value
         return droplet_json_payload_template
+    def digital_ocean_delete_droplet(**kwargs):
+        
 D = Droplets()
 print(Droplets.digital_ocean_create_droplet(
     name="bitshift_droplet", 
