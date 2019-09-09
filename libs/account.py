@@ -16,7 +16,7 @@ logging.basicConfig(
 
 DO_BASE_URL = "https://api.digitalocean.com"
 DO_ACCOUNT = "/v2/account"
-req_object = DigitalOceanRequests(DO_BASE_URL, DO_ACCOUNT)
+req_object = DigitalOceanRequests(DO_BASE_URL, os.environ['DO_AUTH'])
 
 class Account():
     def check_account_status(self, url_endpoint):

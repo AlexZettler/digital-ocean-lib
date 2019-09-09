@@ -20,7 +20,7 @@ def test_kwargs(**kwargs):
 
 class Droplets():
     def digital_ocean_create_droplet(**kwargs):
-        droplet_json_payload = {
+        droplet_json_payload_template = {
             "name": "",
             "region": "",
             "size": "",
@@ -39,7 +39,7 @@ class Droplets():
         }
         for key, value in kwargs.items():
             droplet_json_payload[key] = value
-        return droplet_json_payload
+        return droplet_json_payload_template
 D = Droplets()
 print(Droplets.digital_ocean_create_droplet(
     name="bitshift_droplet", 
