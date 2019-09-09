@@ -4,8 +4,7 @@ import json
 import logging
 from var.vars import *
 
-#Droplet high-level management
-#Will not be used for small scale
+#Droplet high-level management.
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
