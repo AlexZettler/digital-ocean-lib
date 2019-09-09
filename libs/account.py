@@ -3,7 +3,7 @@ import sys
 import requests
 import json
 import logging
-from var.reqmethod import DigitalOceanRequests
+from var.telemetry import DigitalOceanRequests
 
 #For account specific calls.
 #Chaning the PYTHON Path environment variable

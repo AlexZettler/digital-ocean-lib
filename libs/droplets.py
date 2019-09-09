@@ -15,6 +15,9 @@ alt_headers = {
             "Content-Type": "application/json",
             "Authorization": "Bearer %s" % os.environ['DO_AUTH'],
 }
+def test_kwargs(**kwargs):
+    print(kwargs)
+
 class Droplets():
     def digital_ocean_create_droplet(**kwargs):
         droplet_json_payload = {
@@ -34,6 +37,20 @@ class Droplets():
                 ""
             ]
         }
-        return droplet_json_payload['name']
+        for key, value in kwargs.items():
+            droplet_json_payload[key] = value
+        return droplet_json_payload
 D = Droplets()
-print(D.digital_ocean_create_droplet("THIs","That","Yes"))
+print(Droplets.digital_ocean_create_droplet(
+    name="bitshift_droplet", 
+    region="US_EAST", 
+    size="D23_X64",
+    image="IMAGE",
+    ssh_keys="ssgd34y3grsgbv",
+    backups="yes",
+    ipv6="no",
+    user_data="testdata",
+    prviate_networking="no",
+    volumes="vol1",
+    tags="this",
+))
