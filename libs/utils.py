@@ -43,5 +43,17 @@ class Utilities():
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection error")
+    def create_do_project(self, **kwargs):
+        json_payload_template = {
+            "name": "",
+            "description": "",
+            "purpose": "",
+            "environment": ""
+        }
+        for key, value in kwargs.items():
+            json_payload_template[key] = value
+        return json_payload_template
+    def delete_do_projecy(slef, project_id):
+
 regions = Utilities()
 print(regions.list_all_do_regions())
