@@ -4,7 +4,8 @@ import json
 import logging
 from var.vars import *
 
-#Droplet creation and deletetion...s
+#Droplet high-level management
+#Will not be used for small scale
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
@@ -41,7 +42,7 @@ class Droplets():
             droplet_json_payload[key] = value
         return droplet_json_payload_template
     def digital_ocean_delete_droplet(**kwargs):
-        
+    
 D = Droplets()
 print(Droplets.digital_ocean_create_droplet(
     name="bitshift_droplet", 
