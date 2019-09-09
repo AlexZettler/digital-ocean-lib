@@ -17,6 +17,23 @@ alt_headers = {
 }
 class Droplets():
     def digital_ocean_create_droplet(**kwargs):
-        droplet_json_payload = {}
-        for arg in kwargs.values():
-            droplet_json_payload
+        droplet_json_payload = {
+            "name": "",
+            "region": "",
+            "size": "",
+            "image": "",
+            "ssh_keys": [
+                ""
+            ],
+            "backups": "",
+            "ipv6": "",
+            "user_data": "",
+            "private_networking": "",
+            "volumes": "",
+            "tags": [
+                ""
+            ]
+        }
+        return droplet_json_payload['name']
+D = Droplets()
+print(D.digital_ocean_create_droplet("THIs","That","Yes"))
