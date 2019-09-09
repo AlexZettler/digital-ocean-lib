@@ -4,7 +4,7 @@ import json
 import logging
 from var.vars import *
 
-#Droplet creation and deletetion
+#Droplet creation and deletetion...s
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',

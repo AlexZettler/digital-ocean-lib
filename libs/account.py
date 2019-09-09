@@ -6,6 +6,7 @@ import logging
 from var.reqmethod import DigitalOceanRequests
 
 #For account specific calls.
+#Chaning the PYTHON Path environment variable
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
