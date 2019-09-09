@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 alt_headers = {
             "Content-Type": "application/json",
-            "Authorization": "Bearer %s" % self.do_auth_key,
+            "Authorization": "Bearer %s" % os.environ['DO_AUTH'],
 }
 class Droplets():
     def digital_ocean_create_droplet(**kwargs):
