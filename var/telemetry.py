@@ -16,6 +16,7 @@ class DigitalOceanRequests():
     def __init__(self, do_base_url, do_auth_key):
         self.do_base_url = "https://api.digitalocean.com"
         self.do_auth_key = os.environ['DO_AUTH']
+        self.master_str = '{0}/{1}/{2}'.format(self.do_base_url, self.do_auth_key, 'HTTPS').replace('"','')
 
     def digital_ocean_get_endpoint(self, endpoint_url):
         json_response = {}
@@ -24,6 +25,7 @@ class DigitalOceanRequests():
             return get_request
         except requests.ConnectionError as exception:
             logging.error(exception)
+            return -1, None
 
     def digital_ocean_post_endpoint(self, do_payload, endpoint_url):
         json_response = {}
