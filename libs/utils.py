@@ -9,7 +9,7 @@ import hashlib
 from var.telemetry import DigitalOceanRequests
 from var.vars import *
 
-#Some useful utility functions.
+#Useful utility methods
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
@@ -55,14 +55,19 @@ class Utilities():
             logging.info("ERROR: Connection error")
             return -1, None
     def list_all_projects(self, name):
-        project_id = {
+        project_payload = {
             "ProjectName": "",
             "ProjectID": "",
         }
         try:
             r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_PROJECTS)
-            project_name = json.dumps(r['projects']['name']).replace('"','')
-
+            project_id = json.dumps(r['projects']['id']).replace('"','')
+            print(project_id)
+            '''
+            if name in project_name:
+                project_payload['ProjectName'] =  project_name
+                project_payload['ProjectID'] = json.dumps(r['projects']['id']).json()
+                '''
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection error")
@@ -86,7 +91,7 @@ class Utilities():
         return json_payload_template
     #def delete_do_project(slef, project_id):
 utils = Utilities()
-print(utils.list_all_projects())
+print(utils.list_all_projects("Second project"))
 '''
 print(utils.create_do_project(
     name="Cool project",
