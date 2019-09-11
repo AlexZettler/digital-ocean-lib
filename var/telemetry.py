@@ -31,6 +31,7 @@ class DigitalOceanRequests():
             post_request = requests.post(url=self.do_base_url + endpoint_url, headers=alt_headers, data=do_payload).json()
         except requests.ConnectionError as exception:
             logging.error(exception)
+            return -1, None
         except requests.RequestException as exception:
             logging.error(exception)
 d = DigitalOceanRequests("","")

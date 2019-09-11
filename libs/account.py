@@ -19,23 +19,19 @@ DO_ACCOUNT = "/v2/account"
 req_object = DigitalOceanRequests(DO_BASE_URL, os.environ['DO_AUTH'])
 
 class Account():
-    def check_account_status(self, url_endpoint):
-        response_data = {}
-        r = req_object.digital_ocean_get_endpoint(DO_ACCOUNT)
-        response_data['status'] = json.dumps(r['account']['status']).replace('"','')
-        print("Response_data = %s" % response_data['status'])
-        if response_data['status'] == "active":
-            logging.info("Account status: ACTIVE: %s" % response_data['status'])
-        else:
-            logging.info("Account status: INACTIVE: %s" % response_data['status'])
-        return response_data['status']
-
     def get_account_info(self, url_endpoint):
         json_response = {}
-        account_info = req_object.digital_ocean_get_endpoint(DO_ACCOUNT)
-        for key in account_info:
-            json_response[key] = json.dumps(account_info[key]).replace('"','')
-        return json_response
+        try:
+            account_info = req_object.digital_ocean_get_endpoint(DO_ACCOUNT)
+            for key in account_info:
+                json_response[key] = json.dumps(account_info[key]).replace('"','')
+            return
+        except requests.exceptions.ConnectionError as re:
+            logging.info("Error request timed out! /{0}/".format(re))
+            return -1, None
+        except requests.exceptions.TooManyRedirects:
+            logging.info("Bad URL")
+            return None, -1
 a_info = Account()
 print(a_info.get_account_info(DO_ACCOUNT))
 

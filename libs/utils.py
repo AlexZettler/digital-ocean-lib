@@ -5,7 +5,7 @@ import json
 import logging
 import requests
 from var.telemetry import DigitalOceanRequests
-from var.vars import DO_REGIONS, DO_BASE_URL, DO_SIZES, DO_DROPLETS, DO_IAMGES
+from var.vars import *
 
 #Some useful utility functions.
 
@@ -32,7 +32,9 @@ class Utilities():
             r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_SIZES)
             return r
         except requests.ConnectionError as e:
-            logging.info("ERROR: Connection failed.")
+            logging.info("ERROR: Connection failed. {0}".format(e))
+        except requests.exceptions.Timeout:
+            logging.info("Error Connection timed out.")
     def list_all_do_droplets(self):
         try:
             r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_DROPLETS)
@@ -54,8 +56,9 @@ class Utilities():
         }
         for key, value in kwargs.items():
             json_payload_template[key] = value
+        try:
+            r = DigitalOceanRequests.digital_ocean_post_endpoint(json_payload_template, DO_PROJECTS)
         return json_payload_template
-    def delete_do_projecy(slef, project_id):
-
-regions = Utilities()
-print(regions.list_all_do_regions())
+    def delete_do_projecT(slef, project_id):
+utils = Utilities()
+print(utils.list_all_do_regions())
