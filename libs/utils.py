@@ -58,6 +58,9 @@ class Utilities():
             json_payload_template[key] = value
         try:
             r = DigitalOceanRequests.digital_ocean_post_endpoint(json_payload_template, DO_PROJECTS)
+            return r
+        except requests.exceptions.ConnectionError as ce:
+            print("E")
         return json_payload_template
     def delete_do_projecT(slef, project_id):
 utils = Utilities()
