@@ -6,7 +6,6 @@ import logging
 from var.telemetry import DigitalOceanRequests
 
 #For account specific calls.
-#
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',

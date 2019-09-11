@@ -4,6 +4,8 @@ import sys
 import json
 import logging
 import requests
+import random
+import hashlib
 from var.telemetry import DigitalOceanRequests
 from var.vars import *
 
@@ -21,6 +23,10 @@ alt_headers = {
 request_object = DigitalOceanRequests(DO_BASE_URL, os.environ['DO_AUTH'])
 
 class Utilities():
+    def random_number():
+        random_num = os.urandom(16).encode('hex')
+        return random_num
+
     def list_all_do_regions(self):
         try:
             r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_REGIONS)
@@ -47,6 +53,20 @@ class Utilities():
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection error")
+            return -1, None
+    def list_all_projects(self, name):
+        project_id = {
+            "ProjectName": "",
+            "ProjectID": "",
+        }
+        try:
+            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_PROJECTS)
+            project_name = json.dumps(r['projects']['name']).replace('"','')
+
+            return r
+        except requests.ConnectionError as e:
+            logging.info("ERROR: Connection error")
+        return -1, None
     def create_do_project(self, **kwargs):
         json_payload_template = {
             "name": "",
@@ -56,12 +76,22 @@ class Utilities():
         }
         for key, value in kwargs.items():
             json_payload_template[key] = value
+        payload_str = json.dumps(json_payload_template).replace('\'', '"')
+        print(payload_str)
         try:
-            r = DigitalOceanRequests.digital_ocean_post_endpoint(json_payload_template, DO_PROJECTS)
+            r = request_object.digital_ocean_post_endpoint(payload_str, endpoint_url=DO_PROJECTS)
             return r
         except requests.exceptions.ConnectionError as ce:
-            print("E")
+            logging.info("Connection error!")
         return json_payload_template
-    def delete_do_projecT(slef, project_id):
+    #def delete_do_project(slef, project_id):
 utils = Utilities()
-print(utils.list_all_do_regions())
+print(utils.list_all_projects())
+'''
+print(utils.create_do_project(
+    name="Cool project",
+    description="This is going to be used as a test project",
+    purpose="Service or API",
+    environment="Development",
+))
+'''

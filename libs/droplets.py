@@ -15,8 +15,6 @@ alt_headers = {
             "Content-Type": "application/json",
             "Authorization": "Bearer %s" % os.environ['DO_AUTH'],
 }
-def test_kwargs(**kwargs):
-    print(kwargs)
 
 class Droplets():
     def digital_ocean_create_droplet(**kwargs):
