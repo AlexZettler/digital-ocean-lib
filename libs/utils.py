@@ -59,7 +59,6 @@ class Utilities():
         except requests.ConnectionError:
             logging.info("ERROR: Connection error")
             return -1, None
-
 utils = Utilities()
-print(utils.list_all_do_domains())
+print(utils.list_all_do_images())
 
