@@ -8,6 +8,7 @@ from var.telemetry import DigitalOceanRequests
 from var.vars import DO_REGIONS, DO_BASE_URL, DO_SIZES, DO_DROPLETS, DO_IAMGES
 
 #Some useful utility functions.
+#New
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
@@ -55,7 +56,6 @@ class Utilities():
         for key, value in kwargs.items():
             json_payload_template[key] = value
         return json_payload_template
-    def delete_do_projecy(slef, project_id):
-
+    #def delete_do_project(slef, project_id):
 regions = Utilities()
-print(regions.list_all_do_regions())
+print(regions.list_all_do_droplets())
