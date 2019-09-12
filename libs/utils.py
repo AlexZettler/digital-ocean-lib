@@ -54,11 +54,11 @@ class Utilities():
             return -1, None
     def get_project_ids(self, **kwargs):
         try:
+            j = 0
             r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_PROJECTS)
             project_names = []
             for i in range(0, len(kwargs)):
                 project_names += json.dumps(r['projects'][i]['name']).strip('"').split(',')
-            j = 0
             for key, value in kwargs.items():
                 if value in project_names:
                     project_payload = {
@@ -73,6 +73,8 @@ class Utilities():
                     return -1, None
                 else:
                     logging.debug("Project(s) does not exist")
+                    return -1, None
+            return project_payload
         except requests.ConnectionError:
             logging.info("ERROR: Connection error")
             return -1, None
@@ -98,7 +100,7 @@ class Utilities():
         return json_payload_template
     #def delete_do_project(slef, project_id):
 utils = Utilities()
-print(utils.get_project_ids(name0="brenden111", name2="Cool project"))
+print(utils.get_project_ids(name0="brenden111", name1="Cool project", name3="Second project"))
 '''
 print(utils.create_do_project(
     name="Cool project",
