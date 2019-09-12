@@ -23,11 +23,6 @@ class Account():
         response_data = {}
         r = req_object.digital_ocean_get_endpoint(DO_ACCOUNT)
         response_data['status'] = json.dumps(r['account']['status']).replace('"','')
-        print("Response_data = %s" % response_data['status'])
-        if response_data['status'] == "active":
-            logging.info("Account status: ACTIVE: %s" % response_data['status'])
-        else:
-            logging.info("Account status: INACTIVE: %s" % response_data['status'])
         return response_data['status']
 
     def get_account_info(self, url_endpoint):
@@ -37,7 +32,7 @@ class Account():
             json_response[key] = json.dumps(account_info[key]).replace('"','')
         return json_response
 a_info = Account()
-print(a_info.get_account_info(DO_ACCOUNT))
+print(a_info.check_account_status(DO_ACCOUNT))
 
         
 
