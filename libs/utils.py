@@ -88,10 +88,6 @@ class Utilities():
             logging.info("Connection error!")
         return json_payload_template
     #def delete_do_project(slef, project_id):
-<<<<<<< HEAD
-regions = Utilities()
-print(regions.list_all_do_droplets())
-=======
 utils = Utilities()
 print(utils.list_all_projects("Second project"))
 '''
@@ -102,4 +98,3 @@ print(utils.create_do_project(
     environment="Development",
 ))
 '''
->>>>>>> b9e6d9c1624641187fd38a63852acc855fd8d7a4
