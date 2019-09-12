@@ -55,25 +55,24 @@ class Utilities():
     def get_project_ids(self, **kwargs):
         try:
             r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_PROJECTS)
+            project_names = []
             for i in range(0, len(kwargs)):
-                for key, value in kwargs.items():
-                    if value in json.dumps(r['projects'][i]['name']):
-                        master_set = {}
-                        project_payload = {
-                            "ProjectName": "",
-                            "ProjectID": "",
-                        }
-                        print(value)
-                        print(key)
-                        project_payload['ProjectName'] = value
-                        project_payload['ProjectID'] = json.dumps(r['projects'][i]['id']).replace('"','')
-                    elif (len(kwargs) <= 0):
-                        logging.info("Additional arguments required.")
-                        return -1, None
-                    elif value not in json.dumps(r['projects'][i]['name']):
-                        logging.info("Project specified does not exists.")
-                        return -1, None
-            return project_payload
+                project_names += json.dumps(r['projects'][i]['name']).strip('"').split(',')
+            j = 0
+            for key, value in kwargs.items():
+                if value in project_names:
+                    project_payload = {
+                        "ProjectName": "",
+                        "ProjectID": "",
+                    }
+                    project_payload['ProjectName'] = value
+                    project_payload['ProjectID'] = json.dumps(r['projects'][j]['id']).replace('"','')
+                    j += 1
+                elif (len(kwargs) <= 0):
+                    logging.info("Additional arguments required.")
+                    return -1, None
+                else:
+                    logging.debug("Project(s) does not exist")
         except requests.ConnectionError:
             logging.info("ERROR: Connection error")
             return -1, None
@@ -99,7 +98,7 @@ class Utilities():
         return json_payload_template
     #def delete_do_project(slef, project_id):
 utils = Utilities()
-print(utils.get_project_ids(name0="brenden111", name1="Second project"))
+print(utils.get_project_ids(name0="brenden111", name2="Cool project"))
 '''
 print(utils.create_do_project(
     name="Cool project",
