@@ -52,60 +52,14 @@ class Utilities():
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection error")
             return -1, None
-    def get_project_ids(self, **kwargs):
+    def list_all_do_domains(slef):
         try:
-            j = 0
-            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_PROJECTS)
-            project_names = []
-            for i in range(0, len(kwargs)):
-                project_names += json.dumps(r['projects'][i]['name']).strip('"').split(',')
-            for key, value in kwargs.items():
-                if value in project_names:
-                    project_payload = {
-                        "ProjectName": "",
-                        "ProjectID": "",
-                    }
-                    project_payload['ProjectName'] = value
-                    project_payload['ProjectID'] = json.dumps(r['projects'][j]['id']).replace('"','')
-                    j += 1
-                elif (len(kwargs) <= 0):
-                    logging.info("Additional arguments required.")
-                    return -1, None
-                else:
-                    logging.debug("Project(s) does not exist")
-                    return -1, None
-            return project_payload
+            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_DOMAINS)
+            return r
         except requests.ConnectionError:
             logging.info("ERROR: Connection error")
             return -1, None
-        except json.JSONDecodeError:
-            logging.info("JSONDecode error.")
-            return -1, None
-    def create_do_project(self, **kwargs):
-        json_payload_template = {
-            "name": "",
-            "description": "",
-            "purpose": "",
-            "environment": ""
-        }
-        for key, value in kwargs.items():
-            json_payload_template[key] = value
-        payload_str = json.dumps(json_payload_template).replace('\'', '"')
-        print(payload_str)
-        try:
-            r = request_object.digital_ocean_post_endpoint(payload_str, endpoint_url=DO_PROJECTS)
-            return r
-        except requests.exceptions.ConnectionError as ce:
-            logging.info("Connection error!")
-        return json_payload_template
-    #def delete_do_project(slef, project_id):
+
 utils = Utilities()
-print(utils.get_project_ids(name0="brenden111", name1="Cool project", name3="Second project"))
-'''
-print(utils.create_do_project(
-    name="Cool project",
-    description="This is going to be used as a test project",
-    purpose="Service or API",
-    environment="Development",
-))
-'''
+print(utils.list_all_do_domains())
+
