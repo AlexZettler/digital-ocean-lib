@@ -36,6 +36,12 @@ class DigitalOceanRequests():
             return -1, None
         except requests.RequestException as exception:
             logging.error(exception)
+            return -1, None
+    def digital_ocean_delete_endpoint(self, endpoint_url, unique_id):
+        json_response = {}
+        try:
+            delete_request = requests.delete(url=self.do_base_url + endpoint_url + unique_id)
+        except requests.Conne
 d = DigitalOceanRequests("","")
 print(d.digital_ocean_get_endpoint("/v2/volumes"))
 

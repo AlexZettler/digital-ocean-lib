@@ -1,4 +1,6 @@
 
+#Global variables
+
 DO_BASE_URL = "https://api.digitalocean.com"
 DO_DROPLETS = "/v2/droplets"
 DO_ACCOUNT = "/v2/account"
@@ -8,3 +10,4 @@ DO_REGIONS = "/v2/regions"
 DO_SIZES = "/v2/sizes"
 DO_IAMGES = "/v2/images"
 DO_PROJECTS = "/v2/projects"
+DO_DOMAINS = "/v2/domains"
