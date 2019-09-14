@@ -70,7 +70,7 @@ class Project():
         return json_payload_template
 
 project = Project()
-print(project.get_project_ids(name0="brenden111", name1="Cool project", name3="Second project"))
+print(project.get_project_ids(name0="brenden111", name1="Cool prweoject", name3="Second project"))
 '''
 print(utils.create_do_project(
     name="Cool project",

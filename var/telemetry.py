@@ -48,12 +48,12 @@ class DigitalOceanRequests():
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
-    def digital_ocean_put_request(self, endpoint_url, unique_id):
+    def digital_ocean_put_request(self, endpoint_url, unique_id, update_data):
         json_response = {}
         try:
-            put_request = requests.put(self, url=slef.do_base_url + endpoint_url, unique_id).json()
+            put_request = requests.put(self, url=slef.do_base_url + endpoint_url + unique_id, data=update_data).json()
             return put_request
         except requests.ConnectionError as exception:
             logging.error(exception)
-            return -1. None
+            return -1, None
         

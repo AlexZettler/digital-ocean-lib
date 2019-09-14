@@ -20,13 +20,13 @@ req_object = DigitalOceanRequests(DO_BASE_URL, os.environ['DO_AUTH'])
 class Account():
     def check_account_status(self, url_endpoint):
         response_data = {}
-        r = req_object.digital_ocean_get_endpoint(DO_ACCOUNT)
+        r = req_object.digital_ocean_get_request(DO_ACCOUNT)
         response_data['status'] = json.dumps(r['account']['status']).replace('"','')
         return response_data['status']
 
     def get_account_info(self, url_endpoint):
         json_response = {}
-        account_info = req_object.digital_ocean_get_endpoint(DO_ACCOUNT)
+        account_info = req_object.digital_ocean_get_request(DO_ACCOUNT)
         for key in account_info:
             json_response[key] = json.dumps(account_info[key]).replace('"','')
         return json_response
