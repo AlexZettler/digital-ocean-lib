@@ -16,7 +16,6 @@ alt_headers = {
     "Authorization": "Bearer {}".format(os.getenv('DO_AUTH'))
 }
 
-
 class DigitalOceanRequests(object):
     def __init__(self):
         self.do_base_url = "https://api.digitalocean.com"
@@ -41,14 +40,11 @@ class DigitalOceanRequests(object):
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
-        except requests.RequestException as exception:
-            logging.error(exception)
-            return -1, None
 
     def digital_ocean_delete_request(self, endpoint_url, unique_id):
         json_response = {}
         try:
-            delete_request = requests.delete(url=self.do_base_url + endpoint_url + unique_id)
+            delete_request = requests.delete(url=self.do_base_url + endpoint_url + unique_id).json()
             return delete_request
         except requests.ConnectionError as exception:
             logging.error(exception)
@@ -56,14 +52,12 @@ class DigitalOceanRequests(object):
 
     def digital_ocean_put_request(self, endpoint_url, unique_id):
         json_response = {}
-        try:
+        try: 
             put_request = requests.put(self, url=self.do_base_url + endpoint_url + unique_id).json()
             return put_request
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
-
-
 do_requests = DigitalOceanRequests()
 
 if __name__ == '__main__':

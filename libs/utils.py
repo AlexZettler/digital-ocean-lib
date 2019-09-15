@@ -27,13 +27,13 @@ class Utilities():
 
     def list_all_do_regions(self):
         try:
-            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_REGIONS)
+            r = request_object.digital_ocean_get_request(endpoint_url=DO_REGIONS)
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection failed")
     def list_all_do_sizes(self):
         try:
-            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_SIZES)
+            r = request_object.digital_ocean_get_request(endpoint_url=DO_SIZES)
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection failed. {0}".format(e))
@@ -41,20 +41,20 @@ class Utilities():
             logging.info("Error Connection timed out.")
     def list_all_do_droplets(self):
         try:
-            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_DROPLETS)
+            r = request_object.digital_ocean_get_request(endpoint_url=DO_DROPLETS)
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection failed.")
     def list_all_do_images(slef):
         try:
-            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_IAMGES)
+            r = request_object.digital_ocean_get_request(endpoint_url=DO_IAMGES)
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection error")
             return -1, None
     def list_all_do_domains(slef):
         try:
-            r = request_object.digital_ocean_get_endpoint(endpoint_url=DO_DOMAINS)
+            r = request_object.digital_ocean_get_request(endpoint_url=DO_DOMAINS)
             return r
         except requests.ConnectionError:
             logging.info("ERROR: Connection error")
