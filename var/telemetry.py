@@ -40,9 +40,6 @@ class DigitalOceanRequests(object):
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
-        except requests.RequestException as exception:
-            logging.error(exception)
-            return -1, None
 
     def digital_ocean_delete_request(self, endpoint_url, unique_id):
         json_response = {}

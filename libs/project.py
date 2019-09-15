@@ -17,7 +17,6 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-
 # alt_headers = {
 #            "Content-Type": "application/json",
 #            "Authorization": "Bearer %s" % os.environ['DO_AUTH'],
@@ -27,18 +26,17 @@ logging.basicConfig(
 #Lot's of debugging and testing still required for get_project_ids
 
 class Project(object):
+    #Will probably have to clean up this soon.
     def get_project_ids(self, **kwargs):
+        project_names = []
+        project_payload = {}
+        data_final = {}
         try:
             j = 0
             r = do_requests.digital_ocean_get_request(endpoint_url=DO_PROJECTS)
-            project_names = []
-            project_payload = {}
-            data_final ={}
-            for i in range(0, len(kwargs)):
+            for i in range(0, len(r['projects'])):
                 project_names += json.dumps(r['projects'][i]['name']).strip('"').split(',')
-            #print(project_names)
             for key, value in kwargs.items():
-                print(value)
                 if value in project_names:
                     project_payload['ProjectName'] = value
                     project_payload['ProjectID'] = json.dumps(r['projects'][j]['id']).replace('"', '')
@@ -55,7 +53,7 @@ class Project(object):
             logging.info("ERROR: Connection error")
             return -1, None
         except TypeError:
-            logging.info("Cannot serialize the object.")
+            logging.error("Cannot serialize the object.")
             return -1, None
 
     def create_do_project(self, **kwargs):
@@ -76,24 +74,23 @@ class Project(object):
             r = do_requests.digital_ocean_post_endpoint(payload_str, endpoint_url=DO_PROJECTS)
             return r
         except requests.exceptions.ConnectionError as ce:
-            logging.info("Connection error!")
+            logging.info("Connection failed")
         return json_payload_template
 
-#'''
     def delete_do_project(self, project_name):
         try:
-            if project_name in self.get_project_ids(name=project_name):
-                print(self.get_project_ids(name=project_name))
-            #r = do_requests.digital_ocean_delete_request(endpoint_url=DO_PROJECTS, project_id)
-            return 1
+            #We will verify the droplet exists first.
+            project_obj = self.get_project_ids(name=project_name)
+            if project_name in project_obj:
+                logging.error("The project name specified does not exist.")
+                return None
         except requests.exceptions.ConnectionError as ce:
-            logging.info
-#'''
+            logging.error("Connection Failed")
 
 if __name__ == '__main__':
     project = Project()
     print(project.get_project_ids(name1="Cool project"))
-    #rint(project.delete_do_project("Second project"))
+    print(project.delete_do_project("Cool project"))
     '''
     print(utils.create_do_project(
         name="Cool project",

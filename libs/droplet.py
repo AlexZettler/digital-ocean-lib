@@ -104,6 +104,8 @@ class DropletManager(object):
 
 if __name__ == '__main__':
     D = DropletManager()
+    #Test data
+
     print(DropletManager.digital_ocean_create_droplet(
         name="bitshift_droplet",
         region="US_EAST",
