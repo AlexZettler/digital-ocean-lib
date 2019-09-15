@@ -17,7 +17,7 @@ DO_BASE_URL = "https://api.digitalocean.com"
 DO_ACCOUNT = "/v2/account"
 req_object = DigitalOceanRequests(DO_BASE_URL, os.environ['DO_AUTH'])
 
-class Account():
+class Account(object):
     def check_account_status(self, url_endpoint):
         response_data = {}
         r = req_object.digital_ocean_get_request(DO_ACCOUNT)
