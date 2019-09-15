@@ -56,6 +56,20 @@ class Project(object):
     def create_do_project(self, **kwargs):
 
         #Todo: Purpose and environment are pre-defined fields - verfiy these are correct.
+        #Todo: Create allowed_envs = ["Development" , "Staging", "Production"]
+        '''
+        #Todo: Create allowed_purposes = [
+        # "Just trying out DigitalOcean" , 
+        # "Class project / Educational purposes" ,
+        # "Website or blog" , 
+        # "Web Application" ,
+        # "Service or API" ,
+        # "Mobile Application" ,
+        # "Machine learning / AI / Data processing" ,
+        # "IoT"] ,
+        # "Operational / Developer tooling"
+        ]  
+        '''
 
         json_payload_template = {
             "name": "",
