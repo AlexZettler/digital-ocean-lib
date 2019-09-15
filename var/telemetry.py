@@ -13,13 +13,13 @@ logging.basicConfig(
 )
 alt_headers = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer {0}".format(os.environ['DO_AUTH'])
+    "Authorization": "Bearer {}".format(os.getenv('DO_AUTH'))
 }
 
 class DigitalOceanRequests(object):
     def __init__(self):
         self.do_base_url = "https://api.digitalocean.com"
-        self.do_auth_key = os.environ['DO_AUTH']
+        self.do_auth_key = os.getenv('DO_AUTH')
         self.master_str = '{0}/{1}/{2}'.format(self.do_base_url, self.do_auth_key, 'HTTPS').replace('"', '')
 
     def digital_ocean_get_request(self, endpoint_url):
