@@ -9,7 +9,7 @@ from itertools import chain
 from var.telemetry import DigitalOceanRequests, do_requests
 from var.vars import *
 
-# Project management
+# Project management.
 
 logging.basicConfig(
     format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
