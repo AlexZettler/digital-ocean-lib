@@ -41,9 +41,6 @@ class Project(object):
                     project_payload['ProjectName'] = value
                     project_payload['ProjectID'] = json.dumps(r['projects'][j]['id']).replace('"', '')
                     data_final.update({project_payload['ProjectName']:project_payload['ProjectID']})
-                elif len(kwargs) <= 0:
-                    logging.info("Additional arguments required.")
-                    return -1, None
                 else:
                     logging.error("Project(s) does not exist - Please ensure name is spelt correctly.")
                     return -1, None
@@ -75,6 +72,7 @@ class Project(object):
             return r
         except requests.exceptions.ConnectionError as ce:
             logging.info("Connection failed")
+            raise ce
         return json_payload_template
 
     def delete_do_project(self, project_name):
@@ -86,8 +84,11 @@ class Project(object):
                 return None
         except requests.exceptions.ConnectionError as ce:
             logging.error("Connection Failed")
+            raise ce
 
 if __name__ == '__main__':
+    #All of the projects being passed into these functions are currently test examples. 
+
     project = Project()
     print(project.get_project_ids(name1="Cool project"))
     print(project.delete_do_project("Cool project"))
