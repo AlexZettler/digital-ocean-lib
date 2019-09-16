@@ -4,6 +4,8 @@ import json
 from libs.region import Region
 import datetime as dt
 
+from dataclasses import dataclass, field
+
 from var.vars import *
 from var.telemetry import do_requests
 
@@ -16,20 +18,22 @@ class Image(object):
 
     # https://developers.digitalocean.com/documentation/v2/#images
 
+    # Optional args: 'description', 'tags', 'status', and 'error_message'
+
     id: int
     slug: str
     name: str
-    type_: str
+    type: str
     distribution: str
     public: bool
     regions: list
     created_at: dt.datetime
     min_disk_size: int
     size_gigabytes: float
-    description: str
-    tags: list
-    status: str
-    error_message: str
+    tags: list = field(default_factory=list)
+    description: str = field(default="")
+    status: str = field(default="")
+    error_message: str = field(default="")
 
     @classmethod
     def list_images(cls) -> list:

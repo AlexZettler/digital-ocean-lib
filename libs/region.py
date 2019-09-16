@@ -1,11 +1,9 @@
 from dataclasses import dataclass
 import json
 
-from libs.region import Region
-import datetime as dt
-
 from var.vars import *
 from var.telemetry import do_requests
+
 
 @dataclass
 class Region(object):
@@ -35,6 +33,14 @@ class Region(object):
             pass
         else:
             raise TypeError("The passed object must be either a string, or dictionary")
+
+        slug: str = json_data["slug"]
+        name: str = json_data["name"]
+        sizes: list = json_data["sizes"]
+        available: bool = json_data["available"]
+        features: list = json_data["features"]
+
+        return cls(slug, name, sizes, available, features)
 
     @staticmethod
     def get_regions() -> list:

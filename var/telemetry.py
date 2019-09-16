@@ -16,6 +16,7 @@ alt_headers = {
     "Authorization": "Bearer {}".format(os.environ['DO_AUTH'])
 }
 
+
 class DigitalOceanRequests(object):
     def __init__(self):
         self.do_base_url = "https://api.digitalocean.com"
@@ -53,12 +54,14 @@ class DigitalOceanRequests(object):
 
     def digital_ocean_put_request(self, endpoint_url, unique_id):
         json_response = {}
-        try: 
+        try:
             put_request = requests.put(self, url=self.do_base_url + endpoint_url + unique_id).json()
             return put_request
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
+
+
 do_requests = DigitalOceanRequests()
 print(do_requests.digital_ocean_get_request("/v2/account"))
 if __name__ == '__main__':
