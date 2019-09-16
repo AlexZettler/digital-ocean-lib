@@ -16,7 +16,7 @@ logging.basicConfig(
 )
 alt_headers = {
             "Content-Type": "application/json",
-            "Authorization": "Bearer %s" % os.environ['DO_AUTH'],
+            "Authorization": "Bearer {}".format(os.environ['DO_AUTH']),
 }
 request_object = DigitalOceanRequests(DO_BASE_URL, os.environ['DO_AUTH'])
 

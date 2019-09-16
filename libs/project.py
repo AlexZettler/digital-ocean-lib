@@ -23,6 +23,8 @@ logging.basicConfig(
 # }
 # request_object = DigitalOceanRequests(DO_BASE_URL, os.environ['DO_AUTH'])
 
+#Lot's of debugging and testing still required for get_project_ids
+
 class Project(object):
     def get_project_ids(self, **kwargs):
         project_names = []
@@ -92,6 +94,8 @@ class Project(object):
             project_obj = self.get_project_ids(name=project_name)
             if project_name in project_obj:
                 p_id = project_obj['{}'.format(project_name)]
+                print(project_obj)
+                print(p_id)
                 r = do_requests.digital_ocean_delete_request(endpoint_url=DO_PROJECTS, unique_id=p_id)
                 return r
             elif project_name not in project_obj:
@@ -101,7 +105,7 @@ class Project(object):
             logging.error("Connection Failed")
             raise ce
 
-    def get_do_default_project():
+    def get_do_default_project(self):
         try:
             r = do_requests.digital_ocean_get_request(endpoint_url=DO_PROJECTS + '/' + 'default')
             return r
@@ -115,7 +119,7 @@ if __name__ == '__main__':
     project = Project()
     #print(project.get_project_ids(name1="Cool project"))
     #print(project.delete_do_project("Second project"))
-    print(project.get_do_default_project())
+    print(project.delete_do_project("Cool project"))
     
     '''
     print(utils.create_do_project(
