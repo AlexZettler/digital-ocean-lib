@@ -33,8 +33,7 @@ class DigitalOceanRequests():
             post_request = requests.post(url=self.do_base_url + endpoint_url, headers=alt_headers, data=do_payload).json()
         except requests.ConnectionError as exception:
             logging.error(exception)
-        except requests.RequestException as exception:
-            logging.error(exception)
+            return 
 d = DigitalOceanRequests("","")
 print(d.digital_ocean_get_endpoint("/v2/volumes"))
 

@@ -3,6 +3,7 @@ import sys
 import json
 import logging
 from var.vars import *
+from libs.utils import Utilities
 
 #Droplet high-level management.
 
@@ -15,8 +16,7 @@ alt_headers = {
             "Content-Type": "application/json",
             "Authorization": "Bearer %s" % os.environ['DO_AUTH'],
 }
-def test_kwargs(**kwargs):
-    print(kwargs)
+utils = Utilities()
 
 class Droplets():
     def digital_ocean_create_droplet(**kwargs):
@@ -40,8 +40,7 @@ class Droplets():
         for key, value in kwargs.items():
             droplet_json_payload[key] = value
         return droplet_json_payload_template
-    def digital_ocean_delete_droplet(**kwargs):
-    
+    #def digital_ocean_delete_droplet(self, droplet_id):
 D = Droplets()
 print(Droplets.digital_ocean_create_droplet(
     name="bitshift_droplet", 

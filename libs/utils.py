@@ -55,7 +55,12 @@ class Utilities():
         for key, value in kwargs.items():
             json_payload_template[key] = value
         return json_payload_template
-    def delete_do_projecy(slef, project_id):
-
-regions = Utilities()
-print(regions.list_all_do_regions())
+    def get_do_dropletbyid(self, droplet_id):
+        try:
+            r = request_object.digital_ocean_get_endpoint(DO_DROPLETS + "/{0}".format(droplet_id))
+            return r
+        except requests.ConnectionError:
+            return -1, None
+object_x = Utilities()
+#print(object_x.list_all_do_regions())
+print(object_x.list_all_do_droplets())
