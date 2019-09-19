@@ -26,7 +26,8 @@ logging.basicConfig(
 #Lot's of debugging and testing still required for get_project_ids
 
 class Project(object):
-    def get_project_ids(self, **kwargs):
+    #Returns recrod of the project name and the associated project ID.
+    def get_do_project_record(self, **kwargs):
         project_names = []
         project_payload = {}
         data_final = {}
@@ -94,8 +95,6 @@ class Project(object):
             project_obj = self.get_project_ids(name=project_name)
             if project_name in project_obj:
                 p_id = project_obj['{}'.format(project_name)]
-                print(project_obj)
-                print(p_id)
                 r = do_requests.digital_ocean_delete_request(endpoint_url=DO_PROJECTS, unique_id=p_id)
                 return r
             elif project_name not in project_obj:
