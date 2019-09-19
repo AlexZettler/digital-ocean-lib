@@ -13,24 +13,26 @@ name_servers = [
    b'uT4W+2QxoSb4oHEiZvDy/tC9u1xX1TZVBL0TdzTQ7FWBDrfq026fl6etfpQaGXKd',
 ]
 class Domain:
-    
+    # *** Domain methodhere ***
 
 block_size = 16
 pad = lambda s: bytes(s + (block_size - len(s) % block_size) * chr(block_size - len(s) % block_size), 'utf-8')
 unpad = lambda s : s[0:-ord(s[-1:])]
 
+
+
 class AESCipher:
-    def __init__( self, key ):
+    def __init__(self, key):
         #Key has to be converted to bytes sized object.
         self.key =  bytes(key, 'utf-8')
 
-    def encrypt( self, raw ):
+    def encrypt(self, raw):
         raw = pad(raw)
         iv = Random.new().read( AES.block_size )
         cipher = AES.new(self.key, AES.MODE_CBC, iv )
         return base64.b64encode(iv + cipher.encrypt(raw))
 
-    def decrypt( self, enc ):
+    def decrypt(self, enc ):
         enc = base64.b64decode(enc)
         iv = enc[:16]
         cipher = AES.new(self.key, AES.MODE_CBC, iv )
