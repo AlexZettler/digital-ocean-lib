@@ -49,6 +49,9 @@ class Domain:
             frame = _connection.recvfrom(65565)
             _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
             return frame
+    def frame_deconstruction(self, frame):
+        pass
+
         except (OSError, socket.error) as ce:
             raise ce
             return -1, None 
