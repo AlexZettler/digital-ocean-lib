@@ -8,6 +8,7 @@ from var.vars import *
 from libs.image import Image
 from libs.region import Region
 from libs.size import Size
+from libs.kernel import Kernel
 
 from var.vars import *
 from var.telemetry import do_requests
@@ -21,37 +22,6 @@ logging.basicConfig(
     datefmt='%m-%d %H:%M',
     level=logging.INFO,
 )
-
-
-@dataclass
-class Kernel(object):
-    id_: int
-    name: str
-    version: str
-
-    @classmethod
-    def from_json(cls, json_data: any):
-        """
-        This method is responsible for creating an instance from a string or dictionary representing the object.
-        In the case of incorrect will cause an ____ Error.
-
-        :param json_data: The data to convert to th instance
-        :return: A Droplet instance
-        """
-
-        # Convert the json string top a dict if it is passed in this fashion
-        if isinstance(json_data, str):
-            json_data = json.loads(json_data)
-        elif isinstance(json_data, dict):
-            pass
-        else:
-            raise TypeError("The passed object must be either a string, or dictionary")
-
-        id_ = json_data["id"]
-        name = json_data["name"]
-        version = json_data["version"]
-
-        return cls(id_=id_, name=name, version=version)
 
 
 @dataclass
@@ -210,18 +180,7 @@ class DropletManager(object):
 
 
 if __name__ == '__main__':
-    k = Kernel(id_=10, name="test", version="v1.0")
-
-    response_dict = json.loads(droplet_response_json)
-
-    # print(response_dict.keys())
-
-    # print(droplet_dict.keys())
-
-    droplet = Droplet.from_json(droplet_response_json)
-
-    print(droplet)
-
+    pass
     # print(DropletManager.digital_ocean_create_droplet(
     #    name="bitshift_droplet", region="US_EAST", size="D23_X64", image="IMAGE", ssh_keys="ssgd34y3grsgbv",
     #    backups="yes", ipv6="no", user_data="testdata", private_networking="no", volumes="vol1", tags="this",
