@@ -20,6 +20,7 @@ name_servers = [
 class Domain:
     def __init__(self):
         self.FRAME_BUFFER = 65536
+        self.OS_NAME = os.name
     # *** Domain methodhere ***
     domain_record_types = [
         'A', #IPv4 Host
@@ -29,7 +30,7 @@ class Domain:
         'MX', #Mail exchanges
         'NS', #Name servers
         'TXT', #Associate a string of text with a host
-        'SRV', #Location and port number of servers - for specific purposes
+        'SRV', #Location and port number of servers - for specific purposes and services
         'SOA' #Administrative information about the zone
     ]
 
@@ -45,16 +46,20 @@ class Domain:
             )
             _connection.bind((HOST, 0))
             socket_packet_options = _connection.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
-            sock_options = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
-            frame = _connection.recvfrom(65565)
-            _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
-            return frame
-    def frame_deconstruction(self, frame):
-        pass
-
-        except (OSError, socket.error) as ce:
-            raise ce
-            return -1, None 
+            #_connections.ioctl -> (Input/output control): Here we tell the socket to receive all IPv4.v6 packets through an interface
+            #in this case loopback.
+            ''' https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ee309610(v%3Dvs.85) '''
+            if self.OS_NAME == 'nt':
+                sock_on_ipv4 = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
+                frame = _connection.recvfrom(self.FRAME_BUFFER)
+                sock_off_ipv4 = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
+                return frame
+            else:
+                frame = _connection.recvfrom(self.FRAME_BUFFER)
+                return frame
+        except OSError as ose:
+            raise ose
+        
     def get_do_domain(self, domain_name):
         try:
             r = do_requests.digital_ocean_get_request(endpoint_url=DO_DOMAINS +  '/' +  domain_name)
@@ -75,46 +80,6 @@ class Domain:
                 return r
         except requests.ConnectionError as error:
             raise error
-
-'''
-We introduce paddding to ensure the blocksize containing the data
-conforms to that specified by AES - AES Has a fixed block size.
-In the event that raw_data < AESBlockSize we pad the remaining to
-fit inside of the block.
-
-'''
-
-block_size = 16
-pad = lambda s: bytes(s + (block_size - len(s) % block_size) * chr(block_size - len(s) % block_size), 'utf-8')
-unpad = lambda s : s[0:-ord(s[-1:])]
-
-
-#Sample Encryption method
-#Source: https://www.novixys.com/blog/using-aes-encryption-decryption-python-pycrypto/
-''' *** TODO : Lean more avout AES 256 - Encryption ****'''
-
-class AESCipher:
-    def __init__(self, key):
-        #Key has to be converted to bytes sized object.
-        #bytes -> Converts object into bytes object.
-        self.key =  bytes(key, 'utf-8')
-
-    def encrypt(self, raw):
-        raw = pad(raw)
-        #IV : Initialization vector
-        iv = Random.new().read( AES.block_size )
-        cipher = AES.new(self.key, AES.MODE_CBC, iv )
-        return base64.b64encode(iv + cipher.encrypt(raw))
-
-    def decrypt(self, enc ):
-        enc = base64.b64decode(enc)
-        iv = enc[:16]
-        cipher = AES.new(self.key, AES.MODE_CBC, iv )
-        return unpad(cipher.decrypt( enc[16:] )).decode('utf8')
-
-cipher = AESCipher(os.environ['TOKEN_KEY'])
-for i in range (0, len(name_servers)):
-    decrypted = cipher.decrypt(name_servers[i])
 D = Domain()
 #print(D.list_all_do_domain_records())
 print(D.get_eframe(PORT_NUMBER=0))
