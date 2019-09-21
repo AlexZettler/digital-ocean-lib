@@ -26,6 +26,7 @@ class DigitalOceanRequests(object):
     def digital_ocean_get_request(self, endpoint_url):
         json_response = {}
         try:
+            print(os.environ['DO_AUTH'])
             get_request = requests.get(url=self.do_base_url + endpoint_url, headers=alt_headers).json()
             return get_request
         except requests.ConnectionError as exception:
@@ -40,6 +41,11 @@ class DigitalOceanRequests(object):
             return post_request
         except requests.ConnectionError as exception:
             logging.error(exception)
+<<<<<<< HEAD
+            return 
+d = DigitalOceanRequests("","")
+print(d.digital_ocean_get_endpoint("/v2/volumes"))
+=======
             return -1, None
 
     def digital_ocean_delete_request(self, endpoint_url, unique_id):
@@ -51,6 +57,7 @@ class DigitalOceanRequests(object):
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
+>>>>>>> d25752b5976712d89240c88b3e79b67d89488d53
 
     def digital_ocean_put_request(self, endpoint_url, unique_id):
         json_response = {}
