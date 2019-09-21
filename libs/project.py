@@ -70,7 +70,6 @@ class Project(object):
         # "Operational / Developer tooling"
         ]  
         '''
-
         json_payload_template = {
             "name": "",
             "description": "",
@@ -105,7 +104,7 @@ if __name__ == '__main__':
 
     project = Project()
     print(project.get_project_ids(name1="Cool project"))
-    print(project.delete_do_project("Cool project"))
+    #print(project.delete_do_project("Cool project"))
     '''
     print(utils.create_do_project(
         name="Cool project",
