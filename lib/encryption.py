@@ -25,7 +25,7 @@ unpad = lambda s : s[0:-ord(s[-1:])]
 
 class AESCipher:
     def __init__(self, key):
-        #Key has to be converted to bytes sized object.
+        #Key has to be converted to bytes sized object
         #bytes -> Converts object into bytes object.
         self.key =  bytes(key, 'utf-8')
 
