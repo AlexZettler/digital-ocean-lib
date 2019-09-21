@@ -26,8 +26,8 @@ logging.basicConfig(
 #Lot's of debugging and testing still required for get_project_ids
 
 class Project(object):
-    #Will probably have to clean up this soon.
-    def get_project_ids(self, **kwargs):
+    #Returns recrod of the project name and the associated project ID.
+    def get_do_project_record(self, **kwargs):
         project_names = []
         project_payload = {}
         data_final = {}
@@ -93,18 +93,37 @@ class Project(object):
             #We will verify the droplet exists first.
             project_obj = self.get_project_ids(name=project_name)
             if project_name in project_obj:
-                logging.error("The project name specified does not exist.")
+                p_id = project_obj['{}'.format(project_name)]
+                r = do_requests.digital_ocean_delete_request(endpoint_url=DO_PROJECTS, unique_id=p_id)
+                return r
+            elif project_name not in project_obj:
+                logging.error("The project name specified is not valid.")
                 return None
         except requests.exceptions.ConnectionError as ce:
             logging.error("Connection Failed")
+            raise ce
+
+    def get_do_default_project(self):
+        try:
+            r = do_requests.digital_ocean_get_request(endpoint_url=DO_PROJECTS + '/' + 'default')
+            return r
+        except requests.ConnectionError as ce:
+            logging.error("Connection failed")
             raise ce
 
 if __name__ == '__main__':
     #All of the projects being passed into these functions are currently test examples. 
 
     project = Project()
+<<<<<<< HEAD
     print(project.get_project_ids(name1="Cool project"))
     #print(project.delete_do_project("Cool project"))
+=======
+    #print(project.get_project_ids(name1="Cool project"))
+    #print(project.delete_do_project("Second project"))
+    print(project.delete_do_project("Cool project"))
+    
+>>>>>>> 290b73a7eb7269172111654500a73709417257df
     '''
     print(utils.create_do_project(
         name="Cool project",

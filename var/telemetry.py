@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 alt_headers = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer %s" % os.environ['DO_AUTH'],
+    "Authorization": "Bearer {}".format(os.environ['DO_AUTH'])
 }
 
 class DigitalOceanRequests(object):
@@ -40,16 +40,23 @@ class DigitalOceanRequests(object):
             return post_request
         except requests.ConnectionError as exception:
             logging.error(exception)
+<<<<<<< HEAD
+            return 
+d = DigitalOceanRequests("","")
+print(d.digital_ocean_get_endpoint("/v2/volumes"))
+=======
             return -1, None
 
     def digital_ocean_delete_request(self, endpoint_url, unique_id):
         json_response = {}
         try:
-            delete_request = requests.delete(url=self.do_base_url + endpoint_url + unique_id).json()
+            delete_request = requests.delete(url=self.do_base_url + endpoint_url + '/' + unique_id, headers=alt_headers).json()
+            print(self.do_base_url + endpoint_url + '/' + unique_id)
             return delete_request
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
+>>>>>>> d25752b5976712d89240c88b3e79b67d89488d53
 
     def digital_ocean_put_request(self, endpoint_url, unique_id):
         json_response = {}
