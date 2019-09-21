@@ -30,7 +30,7 @@ class Domain:
         'MX', #Mail exchanges
         'NS', #Name servers
         'TXT', #Associate a string of text with a host
-        'SRV', #Location and port number of servers - for specific purposes
+        'SRV', #Location and port number of servers - for specific purposes and services
         'SOA' #Administrative information about the zone
     ]
 
@@ -49,7 +49,7 @@ class Domain:
             #_connections.ioctl -> (Input/output control): Here we tell the socket to receive all IPv4.v6 packets through an interface
             #in this case loopback.
             ''' https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ee309610(v%3Dvs.85) '''
-            if self.OS_NAME == 'NT':
+            if self.OS_NAME == 'nt':
                 sock_on_ipv4 = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
                 frame = _connection.recvfrom(self.FRAME_BUFFER)
                 sock_off_ipv4 = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
