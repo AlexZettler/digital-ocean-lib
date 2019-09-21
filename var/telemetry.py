@@ -40,11 +40,6 @@ class DigitalOceanRequests(object):
             return post_request
         except requests.ConnectionError as exception:
             logging.error(exception)
-<<<<<<< HEAD
-            return 
-d = DigitalOceanRequests("","")
-print(d.digital_ocean_get_endpoint("/v2/volumes"))
-=======
             return -1, None
 
     def digital_ocean_delete_request(self, endpoint_url, unique_id):
@@ -56,7 +51,6 @@ print(d.digital_ocean_get_endpoint("/v2/volumes"))
         except requests.ConnectionError as exception:
             logging.error(exception)
             return -1, None
->>>>>>> d25752b5976712d89240c88b3e79b67d89488d53
 
     def digital_ocean_put_request(self, endpoint_url, unique_id):
         json_response = {}

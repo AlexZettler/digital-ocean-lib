@@ -52,27 +52,6 @@ class Utilities():
             return r
         except requests.ConnectionError as e:
             logging.info("ERROR: Connection error")
-<<<<<<< HEAD
-    def create_do_project(self, **kwargs):
-        json_payload_template = {
-            "name": "",
-            "description": "",
-            "purpose": "",
-            "environment": ""
-        }
-        for key, value in kwargs.items():
-            json_payload_template[key] = value
-        return json_payload_template
-    def get_do_dropletbyid(self, droplet_id):
-        try:
-            r = request_object.digital_ocean_get_endpoint(DO_DROPLETS + "/{0}".format(droplet_id))
-            return r
-        except requests.ConnectionError:
-            return -1, None
-object_x = Utilities()
-#print(object_x.list_all_do_regions())
-print(object_x.list_all_do_droplets())
-=======
             return -1, None
     def list_all_do_domains(slef):
         try:
@@ -99,4 +78,3 @@ print(object_x.list_all_do_droplets())
 utils = Utilities()
 print(utils.list_all_do_project_resources(project_name="brenden111"))
 
->>>>>>> d25752b5976712d89240c88b3e79b67d89488d53

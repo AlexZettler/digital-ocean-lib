@@ -20,6 +20,7 @@ name_servers = [
 class Domain:
     def __init__(self):
         self.FRAME_BUFFER = 65536
+        self.OS_NAME = os.name
     # *** Domain methodhere ***
     domain_record_types = [
         'A', #IPv4 Host
@@ -45,16 +46,20 @@ class Domain:
             )
             _connection.bind((HOST, 0))
             socket_packet_options = _connection.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
-            sock_options = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
-            frame = _connection.recvfrom(65565)
-            _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
-            return frame
-    def frame_deconstruction(self, frame):
-        pass
-
-        except (OSError, socket.error) as ce:
-            raise ce
-            return -1, None 
+            #_connections.ioctl -> (Input/output control): Here we tell the socket to receive all IPv4.v6 packets through an interface
+            #in this case loopback.
+            ''' https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ee309610(v%3Dvs.85) '''
+            if self.OS_NAME == 'NT':
+                sock_on_ipv4 = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
+                frame = _connection.recvfrom(self.FRAME_BUFFER)
+                sock_off_ipv4 = _connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
+                return frame
+            else:
+                frame = _connection.recvfrom(self.FRAME_BUFFER)
+                return frame
+        except OSError as ose:
+            raise ose
+        
     def get_do_domain(self, domain_name):
         try:
             r = do_requests.digital_ocean_get_request(endpoint_url=DO_DOMAINS +  '/' +  domain_name)
